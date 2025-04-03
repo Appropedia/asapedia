@@ -1,0 +1,98 @@
+body {
+	background: #fafafa;
+	font-family: Arial;
+	padding: 1em;
+}
+#asapedia {
+	margin: auto;
+	width: 800px;
+	max-width: 100%;
+}
+#asapedia-banner {
+	margin: 1em 0;
+	text-align: center;
+	max-width: 100%;
+	height: auto;
+}
+#asapedia-logo {
+	cursor: pointer;
+	max-width: 100%;
+	height: auto;
+}
+#asapedia-list,
+#asapedia-list ul {
+	list-style: none;
+}
+#asapedia-list ul {
+	display: none;
+	margin: 1em 0;
+	padding-left: 1em;
+}
+#asapedia-list {
+	background: #fff;
+	border: 1px solid #aaa;
+	border-radius: 10px;
+	padding: 0;
+	margin: 3em 0;
+}
+#asapedia-list li {
+	margin: .5em 0;
+	position: relative;
+}
+#asapedia-list > li {
+	border-bottom: 1px solid #aaa;
+	cursor: pointer;
+	margin: 0;
+	padding: 1em 4em;
+}
+#asapedia-list > li:last-child {
+	border-bottom: none;
+}
+#asapedia-list .arrow {
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: .3em;
+	position: absolute;
+	top: -.3em;
+	left: -2em;
+}
+#asapedia-list > li > .arrow {
+	top: .9em;
+	left: 2em;
+}
+#asapedia-read-offline {
+	background: #fff;
+	border: 1px solid #aaa;
+	border-radius: 10px;
+	margin: 3em 0;
+	padding: 1em;
+}
+#asapedia-read-offline table {
+	border-collapse: collapse;
+	font-size: small;
+}
+#asapedia-read-offline td {
+	padding: .5em 1em .5em 0;
+}
+.asapedia-button {
+	background: #fff;
+	border: 1px solid #aaa;
+	border-radius: 5px;
+	box-shadow: 1px 1px #aaa;
+	cursor: pointer;
+	font: inherit;
+	padding: .5em 1em;
+	white-space: nowrap;
+	width: 120px;
+}
+#asapedia-footer {
+	margin-top: 5em;
+	text-align: center;
+}
+#asapedia-footer a {
+	margin-right: 10px;
+}
+#asapedia-footer span {
+	white-space: nowrap;
+}
