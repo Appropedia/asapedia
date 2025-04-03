@@ -17,6 +17,8 @@ const ASApedia = {
 		} );
 		const params = new URLSearchParams( {
 			title: 'ASApedia',
+			description: 'Buenas prácticas agrícolas',
+			mainpage: 'ASApedia',
 			icon: new URL( 'images/icon.png', document.baseURI ).href,
 			pages: pages.join( ',' )
 		} );
