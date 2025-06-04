@@ -22,7 +22,7 @@ const ASApedia = {
 			icon: new URL( 'images/icon.png', document.baseURI ).href,
 			pages: pages.join( ',' )
 		} );
-		const url = 'https://www.appropedia.org/scripts/downloadZIM.php?' + params.toString();
+		const url = 'https://www.appropedia.org/scripts/generateZIM.php?' + params.toString();
 		window.location.href = url;
 	},
 
@@ -41,7 +41,7 @@ const ASApedia = {
 			qrpage: 'https://www.appropedia.org/ASApedia',
 			pages: pages.join( ',' )
 		} );
-		const url = 'https://www.appropedia.org/scripts/downloadPDF.php?' + params.toString();
+		const url = 'https://www.appropedia.org/scripts/generatePDF.php?' + params.toString();
 		window.location.href = url;
 	},
 
