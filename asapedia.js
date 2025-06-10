@@ -8,41 +8,99 @@ const ASApedia = {
 		window.onbeforeinstallprompt = ASApedia.enableInstallButton;
 	},
 
-	downloadZIM: function () {
+	downloadZIM: async function () {
+
+		// Disable the button to prevent multiple clicks and hint the user that something is happening
+		const button = this;
+		const buttonText = button.textContent;
+		button.textContent = 'Generating...';
+		button.style.pointerEvents = 'none';
+
+		// Get the titles of the pages
 		const pages = [];
 		document.querySelectorAll( '#asapedia-list a' ).forEach( link => {
 			const url = link.href;
 			const page = url.replace( 'https://www.appropedia.org/', '' );
 			pages.push( page );
 		} );
-		const params = new URLSearchParams( {
+
+		// Build the query
+		const query = {
 			title: 'ASApedia',
 			description: 'Buenas prácticas agrícolas',
 			mainpage: 'ASApedia',
 			icon: new URL( 'images/icon.png', document.baseURI ).href,
 			pages: pages.join( ',' )
-		} );
-		const url = 'https://www.appropedia.org/scripts/generateZIM.php?' + params.toString();
-		window.location.href = url;
+		};
+		const queryString = new URLSearchParams( query ).toString();
+		const url = 'https://www.appropedia.org/scripts/generateZIM.php?' + queryString;
+
+		// Generate the ZIM
+		const result = await fetch( url );
+		const bytes = await result.arrayBuffer();
+
+		// Download the ZIM
+		const blob = new Blob( [ bytes ], { type: 'application/octet-stream' } );
+		const href = URL.createObjectURL( blob );
+		const a = document.createElement( 'a' );
+		a.href = href;
+		a.download = 'asapedia.zim';
+		document.body.appendChild( a );
+		a.click();
+		document.body.removeChild( a );
+		URL.revokeObjectURL( href );
+
+		// Re-enable the button
+		button.textContent = buttonText;
+		button.style.pointerEvents = '';
 	},
 
-	downloadPDF: function () {
+	downloadPDF: async function () {
+
+		// Disable the button to prevent multiple clicks and hint the user that something is happening
+		const button = this;
+		const buttonText = button.textContent;
+		button.textContent = 'Generating...';
+		button.style.pointerEvents = 'none';
+
+		// Get the titles of the pages
 		const pages = [];
 		document.querySelectorAll( '#asapedia-list a' ).forEach( link => {
 			const url = link.href;
 			const page = url.replace( 'https://www.appropedia.org/', '' );
 			pages.push( page );
 		} );
-		const params = new URLSearchParams( {
+
+		// Build the query
+		const query = {
 			title: 'ASApedia',
 			subtitle: 'Por Catholic Relief Services',
 			text: 'Buenas prácticas agrícolas para aumentar la productividad, sostenibilidad, resiliencia y prosperidad de las familias, los cultivos y las comunidades.',
 			logo: new URL( 'images/logo.png', document.baseURI ).href,
 			qrpage: 'https://www.appropedia.org/ASApedia',
 			pages: pages.join( ',' )
-		} );
-		const url = 'https://www.appropedia.org/scripts/generatePDF.php?' + params.toString();
-		window.location.href = url;
+		};
+		const queryString = new URLSearchParams( query ).toString();
+		const url = 'https://www.appropedia.org/scripts/generatePDF.php?' + queryString;
+
+		// Generate the PDF
+		const result = await fetch( url );
+		const bytes = await result.arrayBuffer();
+
+		// Download the PDF
+		const blob = new Blob( [ bytes ], { type: 'application/pdf' } );
+		const href = URL.createObjectURL( blob );
+		const a = document.createElement( 'a' );
+		a.href = href;
+		a.download = 'asapedia.pdf';
+		document.body.appendChild( a );
+		a.click();
+		document.body.removeChild( a );
+		URL.revokeObjectURL( href );
+
+		// Re-enable the button
+		button.textContent = buttonText;
+		button.style.pointerEvents = '';
 	},
 
 	enableInstallButton: function ( event ) {
@@ -54,7 +112,7 @@ const ASApedia = {
 			button.setAttribute(  'hidden', '' );
 		};
 	},
-	
+
 	addArrow: function ( item ) {
 		const sublist = item.querySelector( 'ul' );
 		if ( sublist ) {
@@ -70,6 +128,9 @@ const ASApedia = {
 		if ( sublist ) {
 			item.onclick = event => {
 				event.stopPropagation();
+				if ( event.target.tagName === 'A' ) {
+					return;
+				}
 				const arrow = item.querySelector( 'button' );
 				if ( sublist.style.display === '' ) {
 					sublist.style.display = 'block';
